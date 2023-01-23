@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+    <div id="adminDisplay" >
+    <div class="InformationContainerCon" >
+            <div class="InformationContainer" >
+                <h1>FAQ</h1>
+                {% for faq in FAQ %}
+                    <div class="Info">
+                        <div class="question">
+                            <h2>{{ faq.question }}</h2>
+                        </div>
+                        <div class="answer">
+                            <p>{{ faq.answer }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <form method="post" action="/FAQsubmit">
+                    <p>DO YOU HAVE ANY QUESTIONS?</p>
+                    <input type="text" id="q" name="FAQQuestion" placeholder="Question?">
+                    <button class="buttonMedium" id="createPostBodyButton">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

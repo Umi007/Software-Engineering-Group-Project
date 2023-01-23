@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+        {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+        <div id="adminDisplay" >
+
+
+            <div class="InformationContainer">
+                <div id="AdminAddAdminContainer" >
+                <div id="AdminDisplayTitle">
+                             <h1>LEADERBOARD</h1>
+                        </div>
+                <div id="AdminControlButtons" style="color: white">
+                        <form method="POST" action="/worldLeaderboard">
+                            <div>
+                                <button class="button">WORLD</button>
+                            </div>
+                        </form>
+                        <form method="POST" action="/friendLeaderboard">
+                            <div>
+                                <button class="button">FRIENDS</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div id="adminsContainer" style="overflow-y: hidden;background: none;box-shadow: none">
+                        {% if leaders %}
+                            <div id="leadersCon">
+                            <div id="leaderWinnerCon">
+                                <div id="leaderWinner">
+                                    <h4>BEST FOOTPRINT</h4>
+                                    <div id="createPostBodyProfile">
+                                    <div class="carbongramProfilePic">
+                                        {% set profilePic = leaders[0][0].profile_picture | string() %}
+                                        {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                                        <a id="profilePicCon"><img src="data:image/png;base64,{{ profilePic }}"  style="width: 100%" /></a>
+                                    </div>
+                                 </div>
+
+                                    <p>{{ leaders[0][0].username }}</p>
+                                    <p>{{ leaders[0][1].carbon_emissions }}</p>
+
+                                </div>
+
+                            </div>
+
+                            <div id ="leaderRCon">
+                            <div id="leaderItemCon">
+                                <div id="pCon">
+                                    <p>Ranking</p>
+                                </div>
+                                <div id="pCon">
+                                    <p>User</p>
+                                </div>
+                                <div id="pCon">
+                                    <p>CarbonFootprint</p>
+                                </div>
+                                </div>
+
+                            <div id="leaderRest">
+
+                                {% for item in leaders %}
+                                    {%  set i = loop.index + 1 %}
+                                    {% if loop.index != 1%}
+                                        <div id="leaderItemCon"
+                                            {% if i == 2%} style="background: silver;"
+                                            {% elif i == 3 %} style="background: #cd7f32;"
+                                            {% endif %}>
+                                            <div id="pCon">
+                                                <p>{{ i }}</p>
+                                            </div>
+                                            <div id="pCon">
+                                                <div id="createPostBodyProfile">
+                                                <div class="carbongramProfilePic">
+                                                    {% set profilePic = current_user.profile_picture | string() %}
+                                                    {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                                                    <a id="profilePicCon"><img src="data:image/png;base64,{{ profilePic }}"  style="width: 100%" /></a>
+                                                </div>
+                                                <div id="carbongramUsernameCon">
+                                                    <a href="">{{ current_user.firstname }}</a>
+                                                </div>
+                                             </div>
+                                            </div>
+                                            <div id="pCon">
+                                                <p>{{ item[1].carbon_emissions }}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                        {% endif %}
+
+                            </div>
+
+                            </div>
+                        </div>
+
+{#                            <table class="table" id="Leadertable">#}
+{#                                <tr>#}
+{#                                    <th>{{ type }}</th>#}
+{#                                </tr>#}
+{#                                <tr>#}
+{#                                    <th>USERNAME</th>#}
+{#                                    <th>CARBON FOOTPRINT</th>#}
+{#                                </tr>#}
+{#                                {% for item in leaders %}#}
+{#                                    <tr {% if loop.index == 1 %} style="background: goldenrod;"#}
+{#                                        {% elif loop.index == 2%} style="background: silver;"#}
+{#                                        {% elif loop.index == 3 %} style="background: #cd7f32;"#}
+{#                                        {% endif %}>#}
+{#                                        <td><a href="profile/{{ item[0].username }}/{{ item[0].id }}"#}
+{#                                               style="text-decoration: none; color: black">#}
+{#                                            {{ loop.index }}. {{ item[0].username }}</a></td>#}
+{#                                        <td>{{ item[1].carbon_emissions }}</td></tr>#}
+{#                                {% endfor %}#}
+{#                            </table>#}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

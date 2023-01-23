@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+      {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+          <div id="resultDisplay" >
+            <div id="resultCon">
+            <div class="carbonAmount">
+                <p style="font-size: 20px; ">YOUR CARBON FOOTPRINT IS</p>
+                <p style="color: var(--green_color); font-size: 40px; ">{{ carbonFootprint }} tCO2e/YEAR</p>
+                <p style="font-size: 20px; ">THIS IS THE SAME AMOUNT OF CARBON <b style="color: var(--green_color)">{{ trees }}</b> TREES ABSORB IN A YEAR</p>
+            </div>
+            <div id="myChart" ></div>
+            <script type="text/javascript" one={{ carbonFootprint }}>
+                    var carbon = document.currentScript.getAttribute('one');
+                    google.charts.load('current', {'packages': ['bar']});
+                    google.charts.setOnLoadCallback(drawStuff);
+                    function drawStuff() {
+                        var data = new google.visualization.arrayToDataTable([
+                            ['', 'tCO2e'],
+                            ["WORLD", 5],
+                            ["UK", 13],
+                            ["YOU", carbon]
+                        ]);
+
+                        var options = {
+                            legend: {position: 'none'},
+                            axes: {x: {0: {side: 'bottom'}}},
+                            bar: {groupWidth: "50%"},
+                            cssClassNames : {
+                             headerRow :'tableChartHeaderRow',
+                             hoverTableRow : 'tableChartHeaderRowHighlightedState'
+                         }
+                        };
+
+                        var chart = new google.charts.Bar(document.getElementById('myChart'));
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                    }
+
+            </script>
+            </div>
+        <div id="resultCon">
+            <div id="resultButtonsCon">
+                 <div class="buttons">
+                        <a href="{{ url_for('information.reduce') }}" >
+                            <button id="createPostBodyButton" >REDUCE FOOTPRINT</button>
+                        </a>
+
+                        <a href="{{ url_for('information.usefulLinks') }}" >
+                             <button id="createPostBodyButton" >USEFUL LINKS</button><br>
+                        </a>
+
+                        {% if save %}
+                            <a>
+                            <div  id="createPostBodyButton">
+                                <form method="POST" action="/save">
+                                    <input type="hidden" name="totalEmissionsTonne" value={{ carbonFootprint }}>
+                                    <input type="hidden" name="foodPercent" value={{ foodPercent }}>
+                                    <input type="hidden" name="transportPercent" value={{ transportPercent }}>
+                                    <input type="hidden" name="purchasingPercent" value={{ purchasingPercent }}>
+                                    <input type="hidden" name="energyPercent" value={{ energyPercent }}>
+                                    <input type="hidden" name="date" value={{ date }}>
+                                    <button class="button" style="width: 170px;">SAVE FOOTPRINT</button>
+                                </form>
+                                </div>
+                            </a>
+                        {% endif %}
+
+                            <a href="{{ url_for("calculator.calculator") }}" >
+                                 <button id="createPostBodyButton" >RETAKE SURVEY</button><br>
+                            </a>
+
+                    </div>
+            </div>
+
+            <div id="carbonfootprintCon">
+
+                <div class="carbonFootprint">
+                    <div id="carbonfooprintCo"><p style="color: var(--green_color); font-size: 40px; "></p></div>
+                <div id="carbonfootprintImgCon">
+                    <div id="footprint" >
+                        {% set footprintImage = footprint | string() %}
+                        {% set footprintImage = footprintImage.split("b'")[1].split("'")[0] %}
+                        <img style="width: 95%" src="data:image/png;base64,{{ footprintImage }}" alt="Footprint broken into sections
+                                                                                   , food {{ foodPercent }}%
+                                                                                   , transport {{ transportPercent }}%
+                                                                                   , purchasing {{ purchasingPercent }}%
+                                                                                   , energy {{ energyPercent }}%"/>
+                    </div>
+                </div>
+                </div>
+                <div class="resultSide">
+                    <div class="date">
+                        <p>{{ date }}</p>
+                    </div>
+                    <div class="percentage">
+                        <mark style="background-color: #4a8522;">FOOD - {{ foodPercent }}%</mark><br>
+                        <mark style="background-color: #be5108;">TRANSPORT - {{ transportPercent }}%</mark><br>
+                        <mark style="background-color: #1d4999;">PURCHASING - {{ purchasingPercent }}%</mark><br>
+                        <mark style="background-color: #d29500;">ENERGY - {{ energyPercent }}%</mark>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+          </div>
+{% endblock %}

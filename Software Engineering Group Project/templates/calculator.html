@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="split Left">
+        <h1>FOOTPRINT</h1>
+        <div class="questions">
+            <div class="carousel slide" id="questionCarousel" data-interval="false" data-wrap="false">
+                <form method="post" action="/submit">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <p class="question">What best describes your diet?</p>
+                            <div class="btn-wrap quiz-radio-btn calc-radio-btn">
+                                <input type="radio" id="High meat" name="food_1" value=7.19 required>
+                                <label for="High meat">High meat (>=100g/d)</label><br>
+                                <input type="radio" id="Medium meat" name="food_1" value=5.63>
+                                <label for="Medium meat">Medium meat (50-99g/d)</label><br>
+                                <input type="radio" id="Low meat" name="food_1" value=4.67>
+                                <label for="Low meat">Low meat (<50g/d)</label><br>
+                                <input type="radio" id="Pescatarian" name="food_1" value=3.91>
+                                <label for="Pescatarian">Pescatarian</label><br>
+                                <input type="radio" id="Vegetarian" name="food_1" value=3.81>
+                                <label for="Vegetarian">Vegetarian</label><br>
+                                <input type="radio" id="Vegan" name="food_1" value=2.89>
+                                <label for="Vegan">Vegan</label><br>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much do you spend on takeaway/eating out a week?</p>
+                            <input type="number" id="takeaway" name="food_2" value=0 min="0"><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much of the food you buy is wasted?</p>
+                            <div class="btn-wrap quiz-radio-btn calc-radio-btn">
+                                <input type="radio" id="0-10" name="food_3" value=0.1 required>
+                                <label for="0-10">0 - 10%</label><br>
+                                <input type="radio" id="11-20" name="food_3" value=0.2>
+                                <label for="11-20">11 - 20%</label><br>
+                                <input type="radio" id="21-30" name="food_3" value=0.3>
+                                <label for="21-30">21 - 30%</label><br>
+                                <input type="radio" id="31-40" name="food_3" value=0.4>
+                                <label for="31-40">31 - 40%+</label><br>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">Do you have a pet? Enter the amount you have of each.</p>
+                            <div>
+                                <div class="block">
+                                    <p>Fish</p>
+                                    <input type="number" id="Fish" name="food_4_fish" value=0 min="0" required><br>
+                                    <p>Cat</p>
+                                    <input type="number" id="Cat" name="food_4_cat" value=0 min="0" required><br>
+                                    <p>Small Dog</p>
+                                    <input type="number" id="Small Dog" name="food_4_small_dog" value=0 min="0" require>
+                                </div>
+                                <div class="block">
+                                    <p>Large Dog</p>
+                                    <input type="number" id="Large Dog" name="food_4_large_dog" value=0 min="0" required><br>
+                                    <p>Other Small</p>
+                                    <input type="number" id="Other Small" name="food_4_other_small" value=0 min="0"required><br>
+                                    <p>Other Large</p>
+                                    <input type="number" id="Other Large" name="food_4_other_large" value=0 min="0" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item small-radio">
+                                    <div>
+                                        <p class="question">What mode of transport do you use the most?</p>
+                                        <div class="btn-wrap quiz-radio-btn calc-radio-btn small-radio">
+                                            <input type="radio" id="Motorbike" name="transport_1" value="MOTORBIKE_EF" required onClick="hideQuestions('MOTORBIKE_EF')">
+                                            <label for="Motorbike">Motorbike</label><br>
+                                            <input type="radio" id="Car" name="transport_1" value="CAR_EF" required onClick="hideQuestions('CAR_EF')">
+                                            <label for="Car">Car</label><br>
+                                            <input type="radio" id="Bus" name="transport_1" value="BUS_EF" required onClick="hideQuestions('BUS_EF')">
+                                            <label for="Bus">Bus</label><br>
+                                            <input type="radio" class="TEST" id="Walk/Bike" name="transport_1" value="WALK_BIKE_EF" required onClick="hideQuestions('WALK_BIKE_EF')">
+                                            <label for="Walk/Bike">Walk/Bike</label>
+                                        </div>
+                                    </div>
+                                <div id="vehicleSize">
+                                    <p class="question">If you selected car or motorbike, please choose an option below:</p>
+                                    <div class="btn-wrap quiz-radio-btn calc-radio-btn small-radio">
+                                        <input type="radio" id="Small" name="transport_1.1" value=0>
+                                        <label for="Small">Small</label><br>
+                                        <input type="radio" id="MediumCar" name="transport_1.1" value=1>
+                                        <label for="MediumCar">Medium</label><br>
+                                        <input type="radio" id="Large" name="transport_1.1" value=2>
+                                        <label for="Large">Large</label><br>
+                                    </div>
+                                </div>
+                                <div id="vehicleFuel">
+                                    <p class="question">If you selected car, please choose an option below:</p>
+                                    <div class="btn-wrap quiz-radio-btn calc-radio-btn small-radio">
+                                        <input type="radio" id="Diesel" name="transport_1.2" value=0>
+                                        <label for="Diesel">Diesel</label><br>
+                                        <input type="radio" id="Petrol" name="transport_1.2" value=1>
+                                        <label for="Petrol">Petrol</label><br>
+                                        <input type="radio" id="Hybrid" name="transport_1.2" value=2>
+                                        <label for="Hybrid">Hybrid</label><br>
+                                        <input type="radio" id="Plug In Hybrid" name="transport_1.2" value=3>
+                                        <label for="Plug In Hybrid">Plug In Hybrid</label><br>
+                                        <input type="radio" id="Battery Electric Vehicle" name="transport_1.2" value=4>
+                                        <label for="Battery Electric Vehicle">Battery Electric Vehicle</label><br>
+                                    </div>
+                                </div>
+                        </div>
+                        <script>
+                            function hideQuestions(vehicle) {
+                                if (vehicle === "MOTORBIKE_EF") {
+                                    document.querySelector("#vehicleSize").style.display ="initial";
+                                    document.querySelector("#vehicleFuel").style.display ="none";
+                                } else if (vehicle === "CAR_EF") {
+                                    document.querySelector("#vehicleSize").style.display ="initial";
+                                    document.querySelector("#vehicleFuel").style.display ="initial";
+                                } else {
+                                    document.querySelector("#vehicleSize").style.display ="none";
+                                    document.querySelector("#vehicleFuel").style.display ="none";
+                                }
+                            }
+                        </script>
+                        <div class="item">
+                            <p class="question">How many miles do you travel a week in your chosen mode of transport?</p>
+                            <input type="number" id="Chosen Mileage" name="transport_2" value=0 required min="0"><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How many miles do you travel on average a month by train?</p>
+                            <input type="number" id="Train Mileage" name="transport_3" value=0 required min="0"><br>
+                        </div>
+
+                        <div class="item">
+                            <div  style="display: flex; flex-direction: column;">
+                                <p class="question">How many of each flight do you take a year (a return flight is counted separately)?</p>
+                                <div>
+                                    <div class="block">
+                                        <p>Domestic</p>
+                                        <input type="number" id="Domestic" name="transport_4_domestic" value=0 min="0" required>
+                                        <p>Upto 1250km</p>
+                                        <input type="number" id="1250" name="transport_4_1250" value=0 min="0" required>
+                                        <p>Upto 2500km</p>
+                                        <input type="number" id="2500" name="transport_4_2500" value=0 min="0" required>
+                                    </div>
+                                    <div class="block">
+                                        <p>Upto 5500km</p>
+                                        <input type="number" id="5500" name="transport_4_5500" value=0 min="0" required>
+                                        <p>Upto 9000km</p>
+                                        <input type="number" id="9000" name="transport_4_9000" value=0 min="0" required>
+                                        <p>Upto 17500km</p>
+                                        <input type="number" id="17500" name="transport_4_17500" value=0 min="0" required>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 5px;">
+                                    <img src="../static/img/world_map_planes.png" alt="flight distances" style="width: 90%;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much do you spend on electrical appliances a year?</p>
+                            <input type="number" id="electrical" name="purchasing_1" value=0 min="0" required><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much do you spend on clothing a month?</p>
+                            <input type="number" id="clothing" name="purchasing_2" value=0 min="0" required><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much do you spend on pharmaceuticals/cleaning products a month?</p>
+                            <input type="number" id="chemicals" name="purchasing_3" value=0 min="0" required><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How much do spend on other goods (this includes anything not covered, e.g., furniture, books, toys etc.) a month?</p>
+                            <input type="number" id="goods" name="purchasing_4" value=0 min="0" required><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">How many people live in your home?</p>
+                            <input type="number" id="people" name="energy_1" value=1 min="1" required><br>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">What type of house do you have?</p>
+                            <div class="btn-wrap quiz-radio-btn calc-radio-btn">
+                                <input type="radio" id="Mid terrace" name="energy_2" value=2779 required>
+                                <label for="Mid terrace">Mid terrace</label><br>
+                                <input type="radio" id="Flat" name="energy_2" value=2829>
+                                <label for="Flat">Flat</label><br>
+                                <input type="radio" id="End terrace" name="energy_2" value=3442>
+                                <label for="End terrace">End terrace</label><br>
+                                <input type="radio" id="Semi-detached" name="energy_2" value=3847>
+                                <label for="Semi-detached">Semi-detached</label><br>
+                                <input type="radio" id="Bungalow" name="energy_2" value=3866>
+                                <label for="Bungalow">Bungalow</label><br>
+                                <input type="radio" id="Detached" name="energy_2" value=4153>
+                                <label for="Detached">Detached</label><br>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <p class="question">What temperature do you heat your home to (assumes you use gas)?</p>
+                            <div class="btn-wrap quiz-radio-btn calc-radio-btn">
+                                <input type="radio" id="Low" name="energy_3" value=8000 required>
+                                <label for="Low">14 - 17'C Low</label><br>
+                                <input type="radio" id="Medium" name="energy_3" value=12000>
+                                <label for="Medium">18 - 21'C Medium</label><br>
+                                <input type="radio" id="High" name="energy_3" value=17000>
+                                <label for="High">+21'C High</label><br>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <p class="question">How much water do you use a day?</p>
+                            <div class="btn-wrap quiz-radio-btn calc-radio-btn">
+                                <input type="radio" id="Much Less" name="energy_4" value=75 required>
+                                <label for="Much Less">Much Less than average (<=75 litres)</label><br>
+                                <input type="radio" id="Less" name="energy_4" value=100>
+                                <label for="Less">Less than average (100 litres)</label><br>
+                                <input type="radio" id="Average" name="energy_4" value=142>
+                                <label for="Average">Average (142 litres)</label><br>
+                                <input type="radio" id="More" name="energy_4" value=200>
+                                <label for="More">More than average (200 litres)</label><br>
+                                <input type="radio" id="Much More" name="energy_4" value=225>
+                                <label for="Much More">Much more than average (>=225 litres)</label>
+                            </div>
+                            <div>
+                                <button class="button quiz-btn btn-small">Submit Survey</button>
+                            </div>
+                        </div>
+                    </div>
+                <br>
+                </form>
+
+            </div>
+            <div class="carousel-btn-container">
+                <button><a href="#questionCarousel" class="quiz-btn btn-small" data-slide="prev">Previous</a></button>
+                <button><a href="#questionCarousel" class="quiz-btn btn-small" data-slide="next">Next</a></button>
+            </div>
+        </div>
+    </div>
+    <div class="split Right">
+        <h1>CALCULATOR</h1>
+        <img src="../static/img/earth.png" alt="Earth">
+    </div>
+{% endblock %}

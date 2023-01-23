@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+        <div id="adminDisplay" >
+        <div id="AdminDisplayTitle" style="color: white">
+            <h1>UPDATE</h1>
+        </div>
+    <div class="InformationContainer">
+        <form method="POST">
+                <div class="field">
+                    {{ form.csrf_token() }}
+                    <div>
+                        {{ form.name }}
+                        {% for error in form.name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div>
+                        {{ form.link }}
+                        {% for error in form.link.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <div>
+                        {{ form.description }}
+                        {% for error in form.description.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    {{ form.submit(id="adminsLinkButton" ,class="buttonMedium") }}
+                </div>
+            </form>
+    </div>
+        </div>
+    </div>
+{% endblock %}

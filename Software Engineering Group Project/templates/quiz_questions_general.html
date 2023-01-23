@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="background">
+    <img src="../static/img/kerala-2.jpg"/>
+</div>
+<div class="flex background-container row">
+    <div class="question-block col-sm-8">
+        <a href="{{ url_for('index')}}" class="logo-img">
+            <img src="../static/img/logo.png"/>
+        </a>
+        <div class="carousel slide" id="quizQuestionCarousel" data-interval="false" data-wrap="false">
+            <form method="post" action="/general">
+                <div class="carousel-inner">
+
+                    <div class="item active" data-index="1">
+                        <h2>1.True/False: Using less energy is a way to reduce greenhouse gas emissions.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap01">
+                                <input id="true1" type="radio" name="choice1" value="1" onclick="answer01()" required/>
+                                <label for="true1">True</label>
+                                <input id="false1" type="radio" name="choice1" value="0" onclick="answer01()" required/>
+                                <label for="false1">False</label>
+
+                            </div>
+                            <div id="form1"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="2">
+                        <h2>2.True/False: Fifth of global carbon emissions come from raising farm animals for meat.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap02">
+                                <input id="true2" type="radio" name="choice2" value="1" onclick="answer02()" required/>
+                                <label for="true2">True</label>
+                                <input id="false2" type="radio" name="choice2" value="0" onclick="answer02()" required/>
+                                <label for="false2">False</label>
+                            </div>
+                            <div id="form2"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="3">
+                        <h2>3.True/False: Wasting food has effect on greenhouse gas emissions.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap03">
+                                <input id="true3" type="radio" name="choice3" value="1" onclick="answer03()" required/>
+                                <label for="true3">True</label>
+                                <input id="false3" type="radio" name="choice3" value="0" onclick="answer03()" required/>
+                                <label for="false3">False</label>
+                            </div>
+                            <div id="form3"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="4">
+                        <h2>4.True/False: Paris agreement is about the climate change.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap04">
+                                <input id="true4" type="radio" name="choice4" value="1" onclick="answer04()" required/>
+                                <label for="true4">True</label>
+                                <input id="false4" type="radio" name="choice4" value="0" onclick="answer04()" required/>
+                                <label for="false4">False</label>
+                            </div>
+                            <div id="form4"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="5">
+                        <h2>5.True/False: If we add more and more carbon dioxide to the atmosphere,
+                            will it have less of an effect over time?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap05">
+                                <input id="true5" type="radio" name="choice5" value="1" onclick="answer05()" required/>
+                                <label for="true5">True</label>
+                                <input id="false5" type="radio" name="choice5" value="0" onclick="answer05()" required/>
+                                <label for="false5">False</label>
+                            </div>
+                            <div id="form5"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="6">
+                        <h2>6.Which of the following is a greenhouse gas?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap06">
+                                <input id="optionA6" type="radio" name="choice6" value="A" onclick="answer06()" required/>
+                                <label for="optionA6">CH4</label>
+                                <input id="optionB6" type="radio" name="choice6" value="B" onclick="answer06()" required/>
+                                <label for="optionB6">CO2</label>
+                                <input id="optionC6" type="radio" name="choice6" value="C" onclick="answer06()" required/>
+                                <label for="optionC6">O3</label>
+                                <input id="optionD6" type="radio" name="choice6" value="D" onclick="answer06()" required/>
+                                <label for="optionD6">All of the above</label>
+                            </div>
+                            <div id="form6"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="7">
+                        <h2>7.What is greenhouse effect?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap07">
+                                <input id="optionA7" type="radio" name="choice7" value="A" onclick="answer07()" required/>
+                                <label for="optionA7">When you build a greenhouse.</label>
+                                <input id="optionB7" type="radio" name="choice7" value="B" onclick="answer07()" required/>
+                                <label for="optionB7">When gases in our atmosphere trap
+                                    the heat and block it from escaping from Earth.</label>
+                                <input id="optionC7" type="radio" name="choice7" value="C" onclick="answer07()" required/>
+                                <label for="optionC7">The name of climate change legislation
+                                    that was passed by Congress.</label>
+                                <input id="optionD7" type="radio" name="choice7" value="D" onclick="answer07()" required/>
+                                <label for="optionD7">When you are plain your car green</label>
+                            </div>
+                            <div id="form7"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="8">
+                        <h2>8.The following agreement which is about climate change.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap08">
+                                <input id="optionA8" type="radio" name="choice8" value="A" onclick="answer08()" required/>
+                                <label for="optionA8">Paris agreement</label>
+                                <input id="optionB8" type="radio" name="choice8" value="B" onclick="answer08()" required/>
+                                <label for="optionB8">Raballo agreement</label>
+                                <input id="optionC8" type="radio" name="choice8" value="C" onclick="answer08()" required/>
+                                <label for="optionC8">Comprehensive Progressive Trans-Pacific Partnership</label>
+                                <input id="optionD8" type="radio" name="choice8" value="D" onclick="answer08()" required/>
+                                <label for="optionD8">United States–Mexico–Canada Agreement</label>
+                            </div>
+                            <div id="form8"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="9">
+                        <h2>9.What can you do to help fight climate change?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap09">
+                                <input id="optionA9" type="radio" name="choice9" value="A" onclick="answer09()" required/>
+                                <label for="optionA9">Use renewable energy</label>
+                                <input id="optionB9" type="radio" name="choice9" value="B" onclick="answer09()" required/>
+                                <label for="optionB9">Vote for political candidates who will advocate
+                                    for climate-related legislation and policy and improvement</label>
+                                <input id="optionC9" type="radio" name="choice9" value="C" onclick="answer09()" required/>
+                                <label for="optionC9">Add your voice to the issue surrounding climate change</label>
+                                <input id="optionD9" type="radio" name="choice9" value="D" onclick="answer09()" required/>
+                                <label for="optionD9">All of the above</label>
+                            </div>
+                            <div id="form9"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="10">
+                        <h2>10.In the following which is a way we produce greenhouse gases?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap10">
+                                <input id="optionA10" type="radio" name="choice10" value="A" onclick="answer10()" required/>
+                                <label for="optionA10">Burning fossil fuels</label>
+                                <input id="optionB10" type="radio" name="choice10" value="B" onclick="answer10()" required/>
+                                <label for="optionB10">Deforestation</label>
+                                <input id="optionC10" type="radio" name="choice10" value="C" onclick="answer10()" required/>
+                                <label for="optionC10">AgricultureCement</label>
+                                <input id="optionD10" type="radio" name="choice10" value="D" onclick="answer10()" required/>
+                                <label for="optionD10">Cement</label>
+                                <input id="optionE10" type="radio" name="choice10" value="E" onclick="answer10()" required/>
+                                <label for="optionE10">All of the above</label>
+                            </div>
+                            <div id="form10"></div>
+                        </div>
+                        <button class="btn-one btn-solid" type="submit" onclick="enable_all()">Submit Quiz</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="carousel-btn-container">
+            <a href="{{ url_for('quiz.quiz') }}" class="quiz-btn btn-small" id="general-next-btn">Exit Quiz</a>
+            <a href="#quizQuestionCarousel" id="general-continue-btn" class="quiz-btn btn-small" data-slide="next" style="display: none">Continue</a>
+        </div>
+    </div>
+    <div class="question-block-sm col-sm-4">
+
+    </div>
+</div>
+{% endblock %}

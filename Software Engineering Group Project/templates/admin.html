@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+        <div id="adminDisplay" >
+        <div id="AdminDisplayTitle">
+            <h3>Admins</h3>
+        </div>
+
+    <div id="AdminAddAdminContainer">
+    <div class="flex flex-column" id="AdminMainDisplay">
+
+    <div id="AdminControlButtons">
+        <div class="Info">
+            <form method="get" action="/viewFAQ">
+                <button class="button">VIEW FAQS</button>
+            </form>
+        </div>
+
+        <div class="Info">
+            <form method="get" action="/viewLinks">
+                <button class="button">VIEW LINKS</button>
+            </form>
+        </div>
+        <div class="Info">
+            <form method="POST" action="/logs">
+                    <button class="button">VIEW LOGS</button>
+            </form>
+        </div>
+        <div class="Info">
+            <a style="text-decoration: none;color:#0089ff;width: 100%;height: 100%;" href="{{ url_for('admin.addAdmins') }}">
+                <button class="button">ADMINS</button>
+            </a>
+        </div>
+        <div class="Info">
+            <form method="get" action="/viewReportedUsers">
+                <button class="button">VIEW REPORTED USERS</button>
+            </form>
+        </div>
+        <div class="Info">
+            <form method="get" action="/viewReportedPost">
+                <button class="button">VIEW REPORTED POST</button>
+            </form>
+        </div>
+    </div>
+
+        <div id="adminsContainer">
+        {% if faqs %}
+            {% for faq in faqs %}
+                <div id="adminProContainer">
+                <div id="adminFaqCon">
+                    <p>{{ faq.question }}</p>
+                    <p>{{ faq.answer }}</p>
+                </div>
+                 <div id="adminFaqResCon">
+                    {% if faq.approved %}
+                        <p style="color: var(--green_color)">APPROVED</p>
+                    {% else %}
+                        <p style="color: var(--red_color)">NOT APPROVED</p>
+                    {% endif %}
+
+                </div>
+                    <div id="addAdminsButton">
+                        <button class="quizRight" id="addAdminButton"  ><a href="{{ url_for("admin.updateFAQ", id=faq.FAQID) }}">APPROVE</a></button>
+                        <button class="quizWrong" id="addAdminButton" ><a href="{{ url_for("admin.deleteFAQ", id=faq.FAQID) }}">DELETE</a></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if linksC %}
+            <div id="AdminControlButtons">
+             <form method="post" action="/addLink" id="addLink">
+                    <input  style="width:30%" id="carbongramNavSearchbar" type="text" name="name" value="Name" required>
+                    <input style="width:30%" id="carbongramNavSearchbar" type="text" name="link" value="Link" required>
+                    <textarea name="description" id="linkTextAreaP" required>Description</textarea>
+                    <button id="adminsLinkButton" class="buttonMedium">SUBMIT</button>
+                </form>
+            </div>
+
+           {% if links %}
+            {% for link in links %}
+                    <div id="adminProContainer">
+                        <p>{{ link.name }}</p>
+                        <p>{{ link.link }}</p>
+                        <p>{{ link.description }}</p>
+                        <div id="addAdminsButton">
+                            <button class="button"><a href="{{ url_for("admin.updateLink", id=link.linkID) }}">UPDATE</a></button>
+                            <button class="button"><a href="{{ url_for("admin.deleteLink", id=link.linkID) }}">DELETE</a></button>
+                        </div>
+                    </div>
+                {% endfor %}
+               {% endif %}
+        {% endif %}
+
+            {% if logs %}
+                <table class="table">
+                    <tr>
+                        <th>Last 10 Security Log Entries</th>
+                    </tr>
+                    {% for entry in logs %}
+                        <tr>
+                            <td>{{ entry }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        {% if reportedUsers %}
+            {% for user in reportedUsers %}
+                    <div id="adminProContainer">
+                            <div id="carbongramPostTop">
+                                    <div class="carbongramProfilePic">
+                                        {% set PprofilePic = user.profile_picture | string() %}
+                                        {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                                        <a href="profile/{{ user.username }}/{{ user.id }} " id="carbongramProfilePicA" >
+                                            <img src="data:image/png;base64,{{ PprofilePic }}"  />
+                                        </a>
+                                    </div>
+                                    <div id="carbongramUsernameCon">
+                                        <a href="profile/{{ user.username }}/{{ user.id }}">{{ user.username }}
+                                        <p id="adminUserRole">{{ user.role }}</p>
+                                        </a>
+
+                                    </div>
+                            </div>
+                            <div id="addAdminsButton">
+                                <form method="POST"  id="search_friend" action="/deleteUser">
+                                    <button id="addAdminButton" class="quizWrong" name="deleteUser" value="{{ user.id }}">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+
+                {% endfor %}
+
+        {% endif %}
+
+        {% if AllPosts %}
+            {% for post in AllPosts %}
+
+                <div id="carbongramPost">
+                    <div id="carbongramPostTop">
+                        <div class="carbongramProfilePic">
+                            {% set PprofilePic = post[1].profile_picture | string() %}
+                            {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                            <a href="profile/{{ post[1].username }}/{{ post[1].id }} " id="carbongramProfilePicA" >
+                                <img src="data:image/png;base64,{{ PprofilePic }}" {% if post[1].role=="admin" %} style="border: 1px solid var(--red_color) " {% elif post[5] %} style="border: 1px solid var(--green_color)" {% endif %} />
+                                {% if post[1].role=="admin" %}
+                                    <p style="background: var(--red_color);">Admin</p>
+                                {% elif post[5] %}
+                                    <p style="background: var(--green_color);">friend</p>
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div id="carbongramUsernameCon">
+                            <a href="profile/{{ post[1].username }}/{{ post[1].id }}">{{ post[1].username }}</a>
+                            <p>{{ post[0].PostDate }}</p>
+                        </div>
+                        {% if post[1].id == current_user.id or current_user.role == "admin"  %}
+                        <div id="carbongramDelete">
+                            <a href="update/{{ post[0].PostId }}">Edit</a>
+                            <form method="POST" action="/deletePost">
+                             <button name="deletePost" value="{{ post[0].PostId }}" >delete</button>
+                        </form>
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+                    <div id="carbongramPostContent">
+                        <div id="carbongramPostContentText">
+                            <p>{{ post[0].PostText }}</p>
+                        </div>
+                        {% if post[0].PostImg  %}
+                        <div id="carbongramPostContentOther">
+                        {% set postImage = post[0].PostImg | string() %}
+                            {% set postImage = postImage.split("b'")[1].split("'")[0] %}
+                            <img src="data:image/png;base64,{{ postImage }}" />
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="carbongramPostButtons">
+                        <div id="carbongramButtonCon">
+                            <div  id="likeCounter">
+                                <p>Likes</p>
+                                <p>{{ post[2]|length }}</p>
+                            </div>
+                        </div>
+
+                        <div id="carbongramButtonCon">
+                            <a href="comment/{{ post[0].PostId }}">
+                                <button class="commentButton CommentButtonAni" name="comment" value="{{ post[0].PostId }}" ><i class="fa fa-comment-o"></i></button>
+                            </a>
+                            <div  id="likeCounter">
+                                <p>Comments</p>
+                                <p>{{ post[4] }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+    </div>
+        </div>
+    </div>
+{% endblock %}

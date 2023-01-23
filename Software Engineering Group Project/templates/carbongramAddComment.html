@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="carbongramMainbody" {% if current_user.background %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');" {% endif %}>
+
+        <div id="createPostBody" style="display: flex" >
+             <div id="comment_PostBody">
+                <div id="createPostBodyTopCon" style="height: 10%">
+                    <div id="createPostBodyTopTitle">
+                        <h4>Post</h4>
+                    </div>
+                    <div id="closeButtonCon">
+                        <div id="closeButton">
+                            <a href="{{ url_for('carbongram.carbongram') }}" >
+                                <span class="closeButtonA" id="closeLeft"></span>
+                                <span  class="closeButtonA" id="closeRight"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <div id="commentMainBody">
+                     <div id="createPostBodyCon" style="width: 70%;overflow-y: scroll">
+                         <div id="createPostBodyProfile">
+                            <div class="carbongramProfilePic">
+                                {% set profilePic = post[1].profile_picture | string() %}
+                                {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                                <a href="{{ url_for('carbongram.userProfile',username=post[1].username,id=post[1].id ) }}">
+                                    <img src="data:image/png;base64,{{ profilePic }}" style="width: 100%;" /></a>
+                            </div>
+                            <div id="carbongramUsernameCon">
+                                <a href="{{ url_for('carbongram.userProfile',username=post[1].username,id=post[1].id ) }}">
+                                    {{ post[1].firstname }}</a>
+                                <p>{{ post[0].PostDate }}</p>
+                            </div>
+                         </div>
+
+                         <div class="createPostBodyInputCon">
+                             <textarea id="createPostBodyInput" name="comment_post" disabled >{{ post[0].PostText }}</textarea>
+                             {% if post[0].PostImg  %}
+                                <div id="carbongramPostContentOther">
+                                {% set postImage = post[0].PostImg | string() %}
+                                    {% set postImage = postImage.split("b'")[1].split("'")[0] %}
+                                    <img src="data:image/png;base64,{{ postImage }}" />
+                                </div>
+                            {% endif %}
+                         </div>
+                    </div>
+                     <div id="createPostBodyCon" style="width: 50%;border-left: black 1px solid">
+                         <div id="commentPostBodyCon">
+                             {% for comment in post[2] %}
+                                 <div id="commentPostBody">
+                                     <div id="createPostBodyProfile">
+                                        <div class="carbongramProfilePic">
+                                            {% set PprofilePic = comment[1].profile_picture | string() %}
+                                            {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                                            <a href="{{ url_for('carbongram.userProfile',username=comment[1].username,id=comment[1].id ) }}">
+                                                <img src="data:image/png;base64,{{ PprofilePic }}" /></a>
+                                        </div>
+                                        <div id="carbongramUsernameCon">
+                                            <a href="{{ url_for('carbongram.userProfile',username=comment[1].username,id=comment[1].id ) }}">
+                                                {{ comment[1].firstname }}</a>
+                                        </div>
+                                     </div>
+                                     <div id="createPostBodyText">
+                                         <p>{{ comment[0].CommentText }}</p>
+                                     </div>
+                                 </div>
+                             {% endfor %}
+                         </div>
+
+                         <div id="createPostCommentCon">
+                             <form method="post">
+                              {{ form.csrf_token() }}
+                                 {{ form.comment(type="text" ,id="createPostCommentInput", placeholder="Comment") }}
+                                 {{ form.submit_button(id="createPostCommentButton", value="Post") }}
+                                 {% for error in form.comment.errors %}
+                                    <p id="registerError">{{ error }}</p>
+                                {% endfor %}
+                             </form>
+                         </div>
+                     </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+</div>
+ <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

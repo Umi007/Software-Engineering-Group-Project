@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+      {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" style="color:white;{% if backgroundImg %}
+     background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}">
+    <div id="reduceOverlay" ></div>
+
+          <div id="adminDisplay"  style="position: absolute">
+            <div id="reduceCon">
+                <div id="AdminDisplayTitle">
+                <h1>REDUCE YOUR ENVIRONMENTAL IMPACT</h1>
+                </div>
+                <div class="flex flex-column">
+                    <div class="reduceItem" id="INTRO">
+                        <h2>INTRODUCTION</h2>
+                        <p>First things first, what is a Carbon Footprint?<br>It is an estimation of the amount of greenhouse
+                    gases your lifestyle produces, it can also be used for companies or products and anything else.
+                    There is emphasis on estimate, as a Carbon Footprint is challenging to calculate, because there are
+                    countless things to consider and it will never be 100% accurate. Our calculator looks at four main
+                    aspects of someone's life, food, transport, purchasing, and energy.</p>
+
+                <h3>The Greenhouse Effect</h3><br>
+                <p>Greenhouse gases include carbon
+                    dioxide, methane, nitrous oxide, and water vapor (which all occur naturally), and fluorinated gases
+                    (which are synthetic), they cause the Greenhouse Effect. Solar radiation is absorbed by the Earth
+                    and Infra-red radiation (heat) is emitted some escapes into space, but some is reflected by
+                    greenhouse gases which cause the planet to warm up. This is good to an extent as without the
+                    Greenhouse Effect we would all freeze, but it has increased due to human activities releasing more
+                    greenhouse gases leading to climate change. The climate is just the average weather for an area over
+                    time, if the world increased by only a couple degrees (which it already has) this could change the
+                    climate drastically and have very severe consequences. Already we are seeing more unpredictable
+                    weather, storms are become more intense and frequent destroying infrastructure, there are intense
+                    heatwaves leading to fires and droughts. These are only a few consequences, the world is in a fine
+                    balance any disruption leads to a multitude of cascading issues. Visit the
+                    <a href="{{ url_for("information.usefulLinks") }}">useful links</a> page to find out more.</p>
+
+                <p>Below are some lifestyle suggestions that could help reduce your impact on the environment,
+                    more specifically reduce the amount of greenhouse gases produced as a result of your actions. It is a
+                    hard thing to do, altering your habits, but if we all make small changes we can influence change. You
+                    can also campaign and support organisations that try to influence the government and companies to make
+                    change. Thank you for showing an interest, only if you choose to try one small step, it is a step in
+                    the right direction.</p>
+
+                    </div>
+                    <div class="reduceItem" id="FOOD">
+                        <h2>FOOD</h2>
+                        <ul class="block" id="burger">
+                    <li>Limit the amount of meat you consume. Meat takes much more greenhouse gases to produce than vegetables
+                    (It takes 27kgCO2e to produce 1kg of beef, compared to 2kgCO2e for 1kg of vegetables). Meat production
+                    is also responsible for a lot of deforestation so livestock can graze. You do not need to become vegan
+                    over night, perhaps eating more vegetarian meals and buying meat alternatives.</li>
+                    <li>Buy more local and seasonal produce. Out of season food like having strawberries in winter, produces
+                    greenhouse gases from heating large industrial greenhouses or from importing overseas goods.</li>
+                    <li>Try to only buy food you need to lower the amount you waste. Taking a shopping list to stop
+                    unnecessary buying, try to avoid overly packaged items or buy in bulk to reduce packaging, using
+                    your own bags.</li>
+
+                    <p>CHALLENGE - For one day a week eat a vegetarian/vegan diet, here are some
+                        <a href="https://www.bbcgoodfood.com/recipes/category/all-vegetarian">vegetarian recipes</a>
+                        to get started or if you want to push yourself try a week.</p>
+                </ul>
+{#                        <img class="block" src="../static/img/burger.png" alt="burger">#}
+                    </div>
+                    <div class="reduceItem" id="TRANSPORT">
+                        <h2>TRANSPORT</h2>
+                        <ul class="block" id="car">
+                    <li>Try to use more public transport where possible, or walking and cycling are even better. If you
+                        must drive, carpooling is better.</li>
+                    <li>Driving smarter, so choosing to journey in off peak times or avoiding roads that are known to be
+                        congested. You can also follow driving etiquette and the law to keep your mpg high, which uses less
+                        Carbon Dioxide.</li>
+                    <li>When buying a new car try to find more efficient cars, or think about hybrids and all electric
+                        vehicles. The government offer a <a href="https://www.gov.uk/plug-in-car-van-grants">plug-in-grant</a>
+                        where they will pay for a portion of your new car if it classed as low emissions. There are over schemes
+                        available also.</li>
+                    <p>CHALLENGE - Use public transport or walk/bike to work (or anywhere else) for one day a week, or the
+                        entire week to make a real difference.</p>
+                </ul>
+                    </div>
+                    <div class="reduceItem" id="PURCHASING">
+                        <h2>PURCHASING</h2>
+                        <ul class="block" id="bags">
+                    <li>Do not buy unnecessary things, try to only buy things you really need and know that you will use.</li>
+                    <li>Before throwing something in the bin think of ways to reuse or recycle the item. Clothes, books, etc. can be sent
+                        to charity shops. You can also buy second hand or recycled goods from the offset, which promotes the industry
+                        and is better for the environment.</li>
+                    <li>Try to buy from fair trade and sustainable sources, and items with minimal recyclable packaging.
+                        Always look for high quality items that will last and not need updating every few months.</li>
+                    <p>CHALLENGE - Next time you want some new clothes try visiting second hand shops, or exchanging.</p>
+                </ul>
+                    </div>
+                    <div class="reduceItem" id="ENERGY">
+                        <h2>ENERGY</h2>
+                        <ul class="block" id="battery">
+                    <li>There are many small changes you can make around the house, make sure to turn off appliances not
+                        just leaving it on stand by, buy energy efficient products, lower you heating by just one degree.</li>
+                    <li>Reduce the amount of water you use, collecting rain water or use grey water for you garden, having
+                        less or shorter showers and not baths, only use a dish washer or washing machine when it is full
+                        and wash pots by hand if you can, turn the tap off when you clean your teeth.</li>
+                    <li>You can make changes to your house as well, such as using LED lightbulbs which are more efficient
+                        longer lasting and cheaper than fluorescent bulbs, insulating your home, switching to a green energy
+                        provider, low flow fittings, double glazing, solar panels.</li>
+                    <p>CHALLENGE - Try to not leave all your appliances on standby.</p>
+                </ul>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+{% endblock %}

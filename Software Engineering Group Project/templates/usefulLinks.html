@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="background blue" style="z-index: 0;">
+        {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+
+        <div id="adminDisplay" >
+            <div class="InformationContainerCon" >
+                <div class="InformationContainer">
+                <div id="AdminDisplayTitle">
+                     <h1>Useful Links</h1>
+                </div>
+                    {% for link in links %}
+                        <div id="adminProContainer">
+                            <div class="link">
+                                <a href={{ link.link }}><h2>{{ link.name }}</h2></a>
+                            </div>
+                            <div class="description">
+                                <p>{{ link.description }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="profileDeleteCon">
+            <form  id="profileDeleteForm" method="POST" >
+                <div id="profileDeleteText">
+                    <h2>Are you sure you want to delete your account?</h2>
+                </div>
+                    <div class="profileButton" id="profileDeleteAcConButton">
+                        <input type="submit" class="quizWrong" name="submit_button" value="Delete Profile">
+                        <button id="profileButtonR" class="buttonMedium" type="button" >Return</button>
+                    </div>
+
+            </form>
+        </div>
+
+    <div class="background">
+    <img id="userBackground" src="../static/img/kerala-2.jpg"/>
+</div>
+<div class="flex background-container profile-main" {% if current_user.background %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');background-repeat: no-repeat;background-size: cover;" {% endif %}>
+
+
+    <div class="col-md-7 col-sm-7 profile-left">
+    <div id="profileSidebar">
+        <div class="profileTitle">
+            <h2>Profile</h2>
+        </div>
+
+        <div id="profileContainer" >
+            <form  id="profileForm" method="POST" enctype = "multipart/form-data">
+            <div id="profileCon">
+                <div id="profileCarbonCurCarbonCon">
+                    <div id="footprintTitle">
+                        <h3>Current Footprint</h3>
+                    </div>
+                    <div id="footprint">
+                        {% if currentFootprint %}
+                            {% set footprint = currentFootprint.footprint | string() %}
+                            {% set footprint = footprint.split("b'")[1].split("'")[0] %}
+                        <img src="data:image/png;base64,{{ footprint }}" />
+                            <div id="footprintExp">
+                            <p style="background-color: #4a8522;">FOOD: {{ currentFootprint.food }}</p>
+                            <p style="background-color: #be5108;">TRANSPORT: {{ currentFootprint.transport }}</p>
+                            <p style="background-color: #1d4999;">PURCHASING: {{ currentFootprint.purchasing }}</p>
+                            <p style="background-color: #d29500;">ENERGY: {{ currentFootprint.energy }}</p>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+                {% set profilePic = current_user.profile_picture | string() %}
+                {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                <div id="profilePic" >
+                    <a id="profilePicCon">
+                        <img id="profilePicture" src="data:image/png;base64,{{ profilePic }}" alt=""/>
+                        <label for="userProfilePic" class="customCoverupLoad" id="profileCustomProfileLoad">
+                            <i class="fa fa-cloud-upload"></i> Upload Picture
+                        </label>
+                        <input accept="image/*" type='file' name="userProfilePic" id="userProfilePic" onchange="readURL(this);" >
+                    </a>
+                </div>
+            </div>
+
+            <div class="profileSetContainer">
+                <div id="profileSettingsConLeft">
+                {{ form.csrf_token() }}
+                    <div id="error">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="notification is-danger">
+                                    {{ messages[0] }}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="ProfileinputB">
+                            <p>Username</p>
+                            {{ form.username(class="profileFormInput", value=current_user.username ) }}
+                            <div class="errorHolder">
+                                {% for error in form.username.errors %}
+                                    <p id="registerError">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="ProfileinputB">
+                            <p>First Name</p>
+                            {{ form.firstname(class="profileFormInput", value=current_user.firstname ) }}
+                            <div class="errorHolder">
+                                {% for error in form.firstname.errors %}
+                                    <p id="registerError">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="ProfileinputB">
+                            <p>Surname</p>
+                            {{ form.surname(class="profileFormInput", value=current_user.surname ) }}
+                            <div class="errorHolder">
+                                {% for error in form.surname.errors %}
+                                    <p id="registerError">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div id="profileSubButton">
+                            <input  class="buttonMedium" type="submit" name="submit_button" value="Confirm">
+                        </div>
+                     <div  id="profileSubButton">
+                            <p>Change Password</p>
+                            <input  class="buttonMedium" type="submit" name="submit_button" value="Click to Change">
+                      </div>
+                    <div class="profileButton">
+                        <button id="profileButtonB" class="quizWrong" type="button">Delete Profile</button>
+                    </div>
+                </div>
+
+                <div id="profileSettingsConRight">
+                    <div id="profileBackground">
+                        <div id="profileBackgroundPreset">
+                            <img id="backgroundImages" src="data:image/png;base64,{{ backgroundImg }}" style="border: 1px black solid;" />
+                        </div>
+                            <div class="profileBackgroundButtons">
+                                <p>Changing Background may impact Performance</p>
+                                <a>
+                                    <label for="userprofileBackground" class="customCoverupLoad" id="profileCustomProfileLoad">
+                                        <i class="fa fa-cloud-upload"></i> Upload Background
+                                    </label>
+                                    <input accept="image/*" type='file' name="userprofileBackground" id="userprofileBackground" onchange="readURL(this);"/>
+                                </a>
+                            </div>
+                    </div>
+
+                    {% if quizResult %}
+                    <div id="profileQuiz">
+                        <h4>Quiz Score</h4>
+
+                        <div id="profileQuizScore">
+                            {% for quiz in quizResult %}
+                            <div id="quizScoreCon">
+                                <h5>{{ quiz.quiz_category }}</h5>
+                                <div id="quizBarCon">
+                                    {% set rightW = (quiz.user_mark / 10) *100  %}
+                                    {% set wrong = 100 -rightW%}
+                                    <div id="quizBarText">
+                                        <h6>{{ rightW }}%</h6>
+                                        <h6>{{ wrong }}%</h6>
+                                    </div>
+                                    <div id="quizBars">
+                                        <div id="quizBar" class="quizRight" style="width: {{ rightW}}%;border-top-left-radius: 8px;border-bottom-left-radius: 8px;"></div>
+                                        <div id="quizBar" class="quizWrong" style="width:{{ wrong }}%;border-top-right-radius: 8px;border-bottom-right-radius: 8px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    </div>
+    <div class="col-md-5 col-sm-5" id="profileRightBar">
+        <div class="profileRContainer">
+            <div class="profileTitle">
+                <h2>Previous Carbon Footprints</h2>
+            </div>
+
+            <div id="footprintsContainer">
+                {% if pastFootprint %}
+                    {% for footprints in pastFootprint %}
+                        <div id="footprintCarbonCurCarbonCon">
+                        {% set scale = footprints.carbon_emissions * 10 %}
+                            <div id="footprint" >
+                            {% set footprint = footprints.footprint | string() %}
+                            {% set footprint = footprint.split("b'")[1].split("'")[0] %}
+                                <img src="data:image/png;base64,{{ footprint }}" style="height: {{scale }}%;"/>
+                            </div>
+                            <div id="footprintTitle">
+                                <h4>{{ footprints.carbon_emissions }}</h4>
+                                <h4>{{ footprints.date.strftime('%d/%m/%y') }}</h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="profileRContainer">
+            <div class="profileTitle">
+                <h2>Friends</h2>
+            </div>
+
+            <div id="footprintsContainer">
+
+            {% if friends %}
+               {% for friend in friends %}
+                <div id="friendContainer">
+                    <div id="friendProfile">
+                        {% set PprofilePic = friend.profile_picture | string() %}
+                        {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                         <a href="{{ url_for('carbongram.userProfile',username=friend.username,id=friend.id ) }}">
+                             <img src="data:image/png;base64,{{ PprofilePic }}"  />
+                         </a>
+                    </div>
+                    <div id="friendName">
+                        <h5>{{ friend.username }}</h5>
+                    </div>
+
+                    <div id="friendButtons">
+                        <button id="" class="buttonMedium">Message</button>
+                        <form method="POST"  id="search_friend" action="/delFriend">
+                            <button id="deleteFriend" class="quizWrong"  name="removeFriend" value="{{ friend.id }}">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div id="friendContainer">
+            <h3>No friends</h3>
+                </div>
+            {% endif %}
+
+
+        </div>
+
+        </div>
+    </div>
+</div>
+ <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

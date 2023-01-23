@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="background">
+    <img src="../static/img/quiz-background.jpg"/>
+</div>
+<div class="flex background-container">
+    <div class="header content-centre">
+        <div class="container-light">
+            <h2 class="subtitle" onloadstart="">
+                Climate Change Quiz<br>
+                You got {{ quiz_score }} of 10
+            </h2>
+            {% if current_user.is_authenticated  %}
+                <a class=quiz-btn" href="{{ url_for('quiz.quiz') }}">back</a>
+            {% else %}
+                <a class="quiz-btn" id="quiz_back_btn" onclick="pop_window()">back</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

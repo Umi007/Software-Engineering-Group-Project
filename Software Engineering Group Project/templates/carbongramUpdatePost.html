@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="carbongramMainbody" {% if current_user.background %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');" {% endif %}>
+
+        <div id="createPostBody" style="display: flex" >
+             <form method="POST" id="update_post" enctype="multipart/form-data">
+                 {{ form.csrf_token() }}
+                <div id="createPostBodyTopCon">
+                    <div id="createPostBodyTopTitle">
+                        <h4>Update Post</h4>
+                    </div>
+                    <div id="closeButtonCon">
+                        <div id="closeButton">
+                            <a href="{{ url_for('carbongram.carbongram') }}" style="display: flex; justify-content: flex-end">
+                                <span class="closeButtonA" id="closeLeft"></span>
+                                <span  class="closeButtonA" id="closeRight"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <div id="createPostBodyCon">
+                     <div id="createPostBodyProfile">
+                        <div class="carbongramProfilePic">
+                            {% set profilePic = current_user.profile_picture | string() %}
+                            {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                            <a id="profilePicCon"><img src="data:image/png;base64,{{ profilePic }}" alt=""/></a>
+                        </div>
+                        <div id="carbongramUsernameCon">
+                            <a href="">{{ current_user.firstname }}</a>
+                        </div>
+                     </div>
+
+                     <div class="createPostBodyInputCon">
+                         <textarea id="createPostBodyInput" form="update_post" name="updatedPost" >{{ post.PostText }}</textarea>
+                         {% if post.PostImg  %}
+                            {% set postImage = post.PostImg | string() %}
+                            {% set postImage = postImage.split("b'")[1].split("'")[0] %}
+                            <img id="backgroundImages"  src="data:image/png;base64,{{ postImage }}" />
+                         {% else %}
+                             <img id="backgroundImages"  src="" />
+                         {% endif %}
+                     </div>
+
+                     <div class="createPostBodyButtonCon">
+                         <label for="userpostimage" class="customCoverupLoad" id="profileCustomProfileLoad">
+                          <i class="fa fa-cloud-upload"></i> Upload Image
+                      </label>
+                        <input accept="image/*" type='file' name="userpostimage" id="userpostimage" onchange="readURL(this);"/>
+                         {{ form.submit_button(class="buttonMedium" , id="createPostBodyButton", value="Update") }}
+                     </div>
+                </div>
+            </form>
+        </div>
+
+</div>
+ <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

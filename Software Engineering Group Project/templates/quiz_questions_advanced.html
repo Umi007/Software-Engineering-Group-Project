@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="background">
+    <img src="../static/img/kerala-2.jpg"/>
+</div>
+<div class="flex background-container row">
+    <div class="question-block col-sm-8">
+        <a href="{{ url_for('index')}}" class="logo-img">
+            <img src="../static/img/logo.png"/>
+        </a>
+        <div class="carousel slide" id="questionCarousel" data-interval="false" data-wrap="false">
+            <form method="post" action="/advance">
+                <div class="carousel-inner">
+
+                    <div class="item active" data-index="1">
+                        <h2>1.True/False:Reducing food waste can make an even larger impact, saving about 90
+                                    gigatons of carbon dioxide from the atmosphere over 15 years.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap11">
+                                <input id="true11" type="radio" name="choice11" value="1" onclick="answer11()" required/>
+                                <label for="true11">True</label>
+                                <input id="false11" type="radio" name="choice11" value="0" onclick="answer11()" required/>
+                                <label for="false11">False</label>
+                            </div>
+                            <div id="form11"></div>
+                        </div>
+                    </div>
+                    <div class="item" data-index="2">
+                        <h2>2.True/False: Is climate change a result of the Sun getting hotter recently? </h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap12">
+                                <input id="true12" type="radio" name="choice12" value="1" onclick="answer12()" required/>
+                                <label for="true12">True</label>
+                                <input id="false12" type="radio" name="choice12" value="0" onclick="answer12()" required/>
+                                <label for="false12">False</label>
+                            </div>
+                            <div id="form12"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="3">
+                        <h2>3.True/False: Is it true that the climate wasn’t stable before
+                                    the Industrial Revolution?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap13">
+                                <input id="true13" type="radio" name="choice13" value="1" onclick="answer13()" required/>
+                                <label for="true13">True</label>
+                                <input id="false13" type="radio" name="choice13" value="0" onclick="answer13()" required/>
+                                <label for="false13">False</label>
+                            </div>
+                            <div id="form13"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="4">
+                        <h2>4.True/False: One of the causes for rising emission is
+                                    increasing livestock farming.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap14">
+                                <input id="true14" type="radio" name="choice14" value="1" onclick="answer14()" required/>
+                                <label for="true14">True</label>
+                                <input id="false14" type="radio" name="choice14" value="0" onclick="answer14()" required/>
+                                <label for="false14">False</label>
+                            </div>
+                            <div id="form14"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="5">
+                        <h2>5.True/False: Burning fluorinated gases has a very strong warming effect.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap15">
+                                <input id="true15" type="radio" name="choice15" value="1" onclick="answer15()" required/>
+                                <label for="true15">True</label>
+                                <input id="false15" type="radio" name="choice15" value="0" onclick="answer15()" required/>
+                                <label for="false15">False</label>
+                            </div>
+                            <div id="form15"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="6">
+                        <h2>6.Below which country is using nearly all electricity from renewable energy?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap16">
+                                <input id="optionA16" type="radio" name="choice16" value="A" onclick="answer16()" required/>
+                                <label for="optionA16">UK</label>
+                                <input id="optionB16" type="radio" name="choice16" value="B" onclick="answer16()" required/>
+                                <label for="optionB16">US</label>
+                                <input id="optionC16" type="radio" name="choice16" value="C" onclick="answer16()" required/>
+                                <label for="optionC16">Iceland</label>
+                                <input id="optionD16" type="radio" name="choice16" value="D" onclick="answer16()" required/>
+                                <label for="optionD16">China</label>
+                            </div>
+                            <div id="form16"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="7">
+                        <h2>7.What is the percentage of burning fuel for transportation in the global
+                            greenhouse gas emissions worldwide?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap17">
+                                <input id="optionA17" type="radio" name="choice17" value="A" onclick="answer17()" required/>
+                                <label for="optionA17">10%</label>
+                                <input id="optionB17" type="radio" name="choice17" value="B" onclick="answer17()" required/>
+                                <label for="optionB17">5%</label>
+                                <input id="optionC17" type="radio" name="choice17" value="C" onclick="answer17()" required/>
+                                <label for="optionC17">14%</label>
+                                <input id="optionD17" type="radio" name="choice17" value="D" onclick="answer17()" required/>
+                                <label for="optionD17">20%</label>
+                            </div>
+                            <div id="form17"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="8">
+                        <h2>8.In the following percentage which is the carbon dioxide level
+                                    during 20th and 21th century.</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap18">
+                                <input id="optionA18" type="radio" name="choice18" value="A" onclick="answer18()" required/>
+                                <label for="optionA18">30%</label>
+                                <input id="optionB18" type="radio" name="choice18" value="B" onclick="answer18()" required/>
+                                <label for="optionB18">25%</label>
+                                <input id="optionC18" type="radio" name="choice18" value="C" onclick="answer18()" required/>
+                                <label for="optionC18">40%</label>
+                                <input id="optionD18" type="radio" name="choice18" value="D" onclick="answer18()" required/>
+                                <label for="optionD18">50%</label>
+                            </div>
+                            <div id="form18"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="9">
+                        <h2>9.Which natural changes to the climate?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column"  id="option-wrap19">
+                                <input id="optionA19" type="radio" name="choice19" value="A" onclick="answer19()" required/>
+                                <label for="optionA19">Milankovitch cycles</label>
+                                <input id="optionB19" type="radio" name="choice19" value="B" onclick="answer19()" required/>
+                                <label for="optionB19">El Niño Southern Oscillation (ENSO)</label>
+                                <input id="optionC19" type="radio" name="choice19" value="C" onclick="answer19()" required/>
+                                <label for="optionC19">Both of them</label>
+                            </div>
+                            <div id="form19"></div>
+                        </div>
+                    </div>
+
+                    <div class="item" data-index="10">
+                        <h2>10.The following which is the rate of human-included global warming per decade?</h2>
+                        <div class="btn-wrap quiz-radio-btn">
+                            <div class="flex full-width flex-column" id="option-wrap20">
+                                <input id="optionA20" type="radio" name="choice20" value="A" onclick="answer20()" required/>
+                                <label for="optionA20">0.1°C</label>
+                                <input id="optionB20" type="radio" name="choice20" value="B" onclick="answer20()" required/>
+                                <label for="optionB20">0.2°C</label>
+                                <input id="optionC20" type="radio" name="choice20" value="C" onclick="answer20()" required/>
+                                <label for="optionC20">0.3°C</label>
+                                <input id="optionD20" type="radio" name="choice20" value="D" onclick="answer20()" required/>
+                                <label for="optionD20">0.4°C</label>
+                            </div>
+                            <div id="form20"></div>
+                        </div>
+                        <button class="btn-one btn-solid" type="submit" onclick="enable_all()">Submit Quiz</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="carousel-btn-container">
+            <a href="{{ url_for('quiz.quiz') }}" class="quiz-btn btn-small" id="advance-next-btn">Exit Quiz</a>
+            <a href="#questionCarousel" class="quiz-btn btn-small" data-slide="next" id="advance-continue-btn" style="display: none;">Continue</a>
+        </div>
+    </div>
+    <div class="question-block-sm col-sm-4">
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if current_user.is_authenticated %}
+    {% if current_user.background != None %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+        {% endif %}
+    {% endif %}
+
+    <div class="carbongramMainbody" {% if backgroundImg %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');justify-content: center" {% endif %}>
+    
+    <div id="adminDisplay" >
+        <div id="AdminDisplayTitle">
+            <h3>Admins</h3>
+        </div>
+
+        <div id="AdminAddAdminContainer">
+            <div id="AdminControlButtons" >
+               <div class="Info" style="width: 10%">
+            <a style="text-decoration: none;color:#0089ff;width: 100%;height: 100%;" href="{{ url_for('admin.admin') }}">
+                <button class="button"><i class="fa fa-mail-reply" style="font-size: 20px"></i></button>
+            </a>
+        </div>
+            </div>
+            <div id="adminsContainer">
+                <div id="AdminControlButtons">
+                   <form method="POST"  id="search_friend" action="/searchUser">
+                            <input id="carbongramNavSearchbar" name="searchForFriend" placeholder="Add Admin" />
+                   </form>
+                </div>
+                {% if users %}
+                {% for user in users %}
+                    <div id="adminProContainer">
+                            <div id="carbongramPostTop">
+                                    <div class="carbongramProfilePic">
+                                        {% set PprofilePic = user.profile_picture | string() %}
+                                        {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                                        <a href="profile/{{ user.username }}/{{ user.id }} " id="carbongramProfilePicA" >
+                                            <img src="data:image/png;base64,{{ PprofilePic }}"  />
+                                        </a>
+                                    </div>
+                                    <div id="carbongramUsernameCon">
+                                        <a href="profile/{{ user.username }}/{{ user.id }}">{{ user.username }}
+                                        <p id="adminUserRole">{{ user.role }}</p>
+                                        </a>
+
+                                    </div>
+                            </div>
+                            <div id="addAdminsButton">
+                                <form method="POST"  id="search_friend" action="/AddUserAdmin">
+                                    <button id="addAdminButton" class="quizRight" name="addAdmin" value="{{ user.id }}">Add</button>
+                                </form>
+                            </div>
+                        </div>
+
+                {% endfor %}
+            {% endif %}
+
+                {% for admin in admins %}
+                        <div id="adminProContainer">
+                            <div id="carbongramPostTop">
+                                    <div class="carbongramProfilePic">
+                                        {% set PprofilePic = admin.profile_picture | string() %}
+                                        {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                                        <a href="profile/{{ admin.username }}/{{ admin.id }} " id="carbongramProfilePicA" >
+                                            <img src="data:image/png;base64,{{ PprofilePic }}"  />
+                                        </a>
+                                    </div>
+                                    <div id="carbongramUsernameCon">
+                                         <a href="profile/{{ admin.username }}/{{ admin.id }}">{{ admin.username }}
+                                        <p id="adminUserRole">{{ admin.role }}</p>
+                                        </a>
+
+                                    </div>
+
+                            </div>
+                         {% if current_user.id != admin.id %}
+                        <div id="addAdminsButton">
+                                <form method="POST"  id="search_friend" action="/removeAdmin">
+                                    <button id="addAdminButton" class="quizWrong" name="removeAdmin" value="{{ admin.id }}" style="color: white">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="background">
+        <img src="../static/img/background-1.jpg"/>
+    </div>
+    <div class="flex background-container">
+
+        <div class="header content-centre">
+            <div>
+                <h2 class="title-lg">Calculate Carbon Footprint</h2>
+                <div class="btn-container content-centre">
+                    <a href="{{ url_for('calculator.calculator') }}" class="btn-one">
+                        <span>Find Out More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-row inline-flex content-centre">
+            <a href="#content">
+                <img src="../static/img/svg/down-arrow.svg">
+            </a>
+        </div>
+    </div>
+
+    <!--<div class="flex background-container container" id="content">
+        <div class="row container-main">
+            <div class="col-md-6 col-sm-6">
+                <h2>ifesn</h2>
+                <p>
+                    uiesbfeiufbsiufbseiufesfbiueuifuisfbiubiuibufse
+                </p>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <img class="full-width" src="../static/img/kerala-2.jpg">
+            </div>
+        </div>
+    </div>-->
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="background">
+    <img src="../static/img/quiz-background.jpg"/>
+</div>
+<div class="flex background-container">
+    <div class="header content-centre">
+        <div class="container-light">
+            <h2 class="subtitle">Climate Change Quiz</h2>
+            <div>
+                <a class="quiz-btn" href="{{ url_for('quiz.quiz_questions_general') }}">General</a>
+                <a class="quiz-btn" href="{{ url_for('quiz.quiz_questions_advanced') }}">Advanced</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="carbongramMainbody" {% if current_user.background %}
+     {% set backgroundImg = current_user.background | string() %}
+     {% set backgroundImg = backgroundImg.split("b'")[1].split("'")[0] %}
+     style="background-image: url('data:image/png;base64,{{ backgroundImg }}');" {% endif %}>
+    <div id="carbongramNavbar">
+        <div id="carbongramNavbarCon">
+            <div id="carbongramHamburgerMenu">
+                <h3>Menu</h3>
+            </div>
+            <div id="carbongramlogo">
+                  <a id="carbongramImageCon" href="{{ url_for('carbongram.carbongram') }}"><img src="/static/img/logo-2.png" /></a>
+            </div>
+            <div id="carbongramSearchbar">
+                <form method="POST"  id="search_friend" action="/search_for_friend">
+                    <input id="carbongramNavSearchbar" name="searchForFriend" placeholder="Search for Friends" />
+                </form>
+            </div>
+            <div id="carbongramButtons">
+                <h3 id="carbongramHome"><i class="fa fa-home"></i></h3>
+                <h3 id="createPost"><i class="fa fa-plus-square-o"></i></h3>
+            </div>
+            <div id="carbongramProfilePic">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="createPostBody" >
+             <form method="POST" id="add_post" action="/add_post" enctype="multipart/form-data">
+                <div id="createPostBodyTopCon">
+                    <div id="createPostBodyTopTitle">
+                        <h4>Create Post</h4>
+                    </div>
+                    <div id="closeButtonCon">
+                        <div id="closeButton">
+                            <span class="closeButtonA" id="closeLeft"></span>
+                            <span  class="closeButtonA" id="closeRight"></span>
+                        </div>
+                    </div>
+                </div>
+                 <div id="createPostBodyCon">
+                     <div id="createPostBodyProfile">
+                        <div class="carbongramProfilePic">
+                            {% set profilePic = current_user.profile_picture | string() %}
+                            {% set profilePic = profilePic.split("b'")[1].split("'")[0] %}
+                            <a id="profilePicCon"><img src="data:image/png;base64,{{ profilePic }}"  style="width: 100%" /></a>
+                        </div>
+                        <div id="carbongramUsernameCon">
+                            <a href="">{{ current_user.firstname }}</a>
+                        </div>
+                     </div>
+
+                     <div class="createPostBodyInputCon">
+                         <textarea id="createPostBodyInput" form="add_post" name="text_area" >What's on your mind?</textarea>
+                         <img id="backgroundImages" src="" />
+                     </div>
+                      <label for="userpostimage" class="customCoverupLoad" id="profileCustomProfileLoad">
+                          <i class="fa fa-cloud-upload"></i> Upload Image
+                      </label>
+                     <input accept="image/*" type='file' name="userpostimage" id="userpostimage" onchange="readURL(this);"/>
+                     <div class="createPostBodyButtonCon">
+                         {{ form.submit_button(class="buttonMedium" , id="createPostBodyButton", value="Post") }}
+                     </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    <div class="carbongramPostBody">
+
+        <div id="carbongramCreateP">
+            <div id="carbongramCreateCon">
+                <div id="carbongramCreatePCon">
+                    <div class="carbongramProfilePic">
+                        <a href="">
+                            <img src="data:image/png;base64,{{ profilePic }}" />
+                        </a>
+                    </div>
+                    <div id="carbongramOnMind">
+                        <div id="carbongramOnMindB">
+                            <h5>What's on your mind?</h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% if notFound %}
+            <div id="carbongramPost">
+                <div id="carbongramPostTop" style="height: 100px">
+                    <div id="carbongramUsernameCon">
+                        <h3>No Users found</h3>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if users %}
+            {% for user in users %}
+
+                <div id="carbongramPost">
+                    <div id="carbongramPostTop" style="height: 100px">
+                        <div class="carbongramProfilePic">
+                            {% set PprofilePic = user[0].profile_picture | string() %}
+                            {% set PprofilePic = PprofilePic.split("b'")[1].split("'")[0] %}
+                            <a href="profile/{{ user[0].username }}/{{ user[0].id }}" id="carbongramProfilePicA"><img src="data:image/png;base64,{{ PprofilePic }}" /></a>
+                        </div>
+                        <div id="carbongramUsernameCon">
+                            <a href="profile/{{ user[0].username }}/{{ user[0].id }}">{{ user[0].username }}</a>
+                        </div>
+
+                        {% if user[0].id != current_user.id and user[1] == False %}
+                        <div id="carbongramDelete">
+                            <form method="POST" action="/addFriend">
+                                <button class="likeButton likeButtonAni" id="addFriendButton" name="addFriend" value="{{ user[0].id }}"  ><i class="fa fa-user-plus"></i></button>
+                            </form>
+                        </div>
+                        {% else %}
+                            <div id="carbongramDelete">
+                            <form method="POST" action="/removeFriend">
+                                <button class="likeButton likeButtonAni" id="addFriendButton" name="removeFriend" value="{{ user[0].id }}" ><i class="fa fa-user-times"></i></button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                </div>
+
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+ <script type="text/javascript" src="{{ url_for('static', filename='carbongramMain.js') }}"></script>
+{% endblock %}
